@@ -18,7 +18,7 @@ export default function RegisterPage() {
 
   const register = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(""); // 에러 메시지 초기화
+    setError("");
 
     try {
       // 클라이언트 측 유효성 검사

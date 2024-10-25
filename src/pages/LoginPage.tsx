@@ -2,6 +2,14 @@ import { useState, FormEvent } from "react";
 import style from "../styles/LoginPage.module.css";
 import { Navigate } from "react-router-dom";
 
+// 응답 데이터 타입 정의
+interface LoginResponse {
+  message: string;
+  user?: {
+    username: string;
+  };
+}
+
 export default function LoginPage() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -10,6 +18,8 @@ export default function LoginPage() {
 
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(""); // 에러 메시지 초기화
+
     if (!username || !password) {
       setError("아이디와 패스워드를 입력해주세요.");
       return;
@@ -25,16 +35,22 @@ export default function LoginPage() {
         credentials: "include",
       });
 
-      const data = await response.json();
+      const data: LoginResponse = await response.json();
 
-      if (response.ok) {
+      if (response.status === 200) {
+        // 로그인 성공
+        console.log("로그인 성공:", data.user?.username);
         setRedirect(true);
+      } else if (response.status === 401) {
+        // 인증 실패
+        setError(data.message || "등록되지 않은 회원입니다@");
       } else {
-        setError(data.message || "로그인에 실패했습니다.");
+        // 기타 에러
+        setError("로그인에 실패했습니다.");
       }
     } catch (error) {
-      console.error(error);
-      setError("로그인 중 오류가 발생했습니다.");
+      console.error("로그인 에러:", error);
+      setError("서버와의 통신 중 오류가 발생했습니다.");
     }
   };
 

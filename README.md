@@ -338,5 +338,5 @@ https://mswjs.io/docs/best-practices/typescript/
 https://mswjs.io/docs/integrations/browser
 <br />
 
-**msw 구현한 github 주소**
+**velog 주소**
 https://velog.io/@so356hot/VITE-REACT-TYPESCRIPT%EC%97%90-MSW-%EC%A0%81%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0
